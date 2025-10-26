@@ -97,3 +97,17 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Firebase config files
+google-services.json
+GoogleService-Info.plist
+
+# Firebase SDK (ignore all imported SDK folders)
+Assets/Firebase*
+Assets/ExternalDependencyManager*
+Assets/Plugins/Android/Firebase*
+Assets/Plugins/iOS/Firebase*
+
+# Firebase desktop config
+Assets/StreamingAssets/google-services-desktop.json
+Assets/StreamingAssets/google-services-desktop.json.meta
