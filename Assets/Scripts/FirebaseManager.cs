@@ -10,6 +10,7 @@ public class FirebaseManager : MonoBehaviour
     public static FirebaseManager Instance { get; private set; }
     public DatabaseReference DBreference;
     public string CurrentRoom = "";
+    public int PlayerIndex = 0;
 
     private void Awake()
     {

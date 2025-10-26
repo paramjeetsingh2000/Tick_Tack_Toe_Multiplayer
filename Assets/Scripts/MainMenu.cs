@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour
             _roomId.text = roomKey;
             FirebaseManager.Instance.CurrentRoom = roomKey;
             FirebaseManager.Instance.ListenToNodeChanges(roomKey);
+            FirebaseManager.Instance.PlayerIndex = 1;
             Debug.Log($"Room created: {roomKey}");
         }
         else
@@ -90,6 +91,7 @@ public class MainMenu : MonoBehaviour
                 Debug.Log($"Room '{roomKey}' updated: {updatedJson}");
                 FirebaseManager.Instance.CurrentRoom = roomKey;
                 FirebaseManager.Instance.ListenToNodeChanges(roomKey);
+                FirebaseManager.Instance.PlayerIndex = 2;
                 SceneManager.LoadScene("GameScene");
                 return;
             }
