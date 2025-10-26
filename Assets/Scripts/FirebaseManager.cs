@@ -4,6 +4,7 @@ using Firebase.Analytics;
 using Firebase.Database;
 using Google.MiniJSON;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FirebaseManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class FirebaseManager : MonoBehaviour
     public DatabaseReference DBreference;
     public string CurrentRoom = "";
     public int PlayerIndex = 0;
+    public ButtonManager ButtonManager;
 
     private void Awake()
     {
@@ -102,7 +104,7 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    public async Task UpdateNodeValue(string key, string json)
+    public async Task UpdateNodeValue(string json)
     {
         if (DBreference == null)
         {
@@ -113,23 +115,23 @@ public class FirebaseManager : MonoBehaviour
         try
         {
             // Update the node (overwrite)
-            await DBreference.Child(key).SetRawJsonValueAsync(json);
-            Debug.Log($"Node '{key}' updated successfully with JSON.");
+            await DBreference.Child(CurrentRoom).SetRawJsonValueAsync(json);
+            Debug.Log($"Node '{CurrentRoom}' updated successfully with JSON.");
 
             // Fetch the updated node to confirm
-            var snapshot = await DBreference.Child(key).GetValueAsync();
+            var snapshot = await DBreference.Child(CurrentRoom).GetValueAsync();
             if (snapshot.Exists)
             {
-                Debug.Log($"Updated value of '{key}': {snapshot.GetRawJsonValue()}");
+                Debug.Log($"Updated value of '{CurrentRoom}': {snapshot.GetRawJsonValue()}");
             }
             else
             {
-                Debug.LogWarning($"Node '{key}' exists but no value found after update.");
+                Debug.LogWarning($"Node '{CurrentRoom}' exists but no value found after update.");
             }
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"Failed to update node '{key}': {e.Message}");
+            Debug.LogError($"Failed to update node '{CurrentRoom}': {e.Message}");
         }
     }
 
@@ -160,6 +162,15 @@ public class FirebaseManager : MonoBehaviour
 
         if (e.Snapshot.Exists)
         {
+            if (e.Snapshot.GetRawJsonValue() == "{\"player1\":\"1\",\"player2\":\"1\"}")
+            {
+                SceneManager.LoadScene("GameScene");
+            }
+            else if (e.Snapshot.GetRawJsonValue() != "{\"player1\":\"1\",\"player2\":\"0\"}" && e.Snapshot.GetRawJsonValue() != "" && ButtonManager != null)
+            {
+                ButtonManager.SetUpdatedData(e.Snapshot.GetRawJsonValue());
+            }
+
             Debug.Log($"Node value changed: {e.Snapshot.GetRawJsonValue()}");
         }
         else
