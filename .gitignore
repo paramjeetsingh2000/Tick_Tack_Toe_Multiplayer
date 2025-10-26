@@ -111,3 +111,7 @@ Assets/Plugins/iOS/Firebase*
 # Firebase desktop config
 Assets/StreamingAssets/google-services-desktop.json
 Assets/StreamingAssets/google-services-desktop.json.meta
+
+# Firebase Database URL (local only)
+Assets/Resources/DatabaseUrl.txt
+Assets/Resources/DatabaseUrl.txt.meta
